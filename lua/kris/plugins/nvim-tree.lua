@@ -14,7 +14,7 @@ vim.g.nvim_tree_hide_dotfiles = 0
 nvimtree.setup({
   sort_by = "case_sensitive",
   view = {
-    width = 20,
+    width = 35,
   },
   renderer = {
     group_empty = true,
