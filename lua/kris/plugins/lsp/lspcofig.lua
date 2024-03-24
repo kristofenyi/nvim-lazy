@@ -33,6 +33,14 @@ return {
 
     -- Ruby language server (solargraph)
     lspconfig.solargraph.setup{
+      cmd = { "solargraph", "stdio" }
+      filetypes = { "ruby" }
+	init_options = {
+  formatting = true
+}
+root_dir = function(startpath)
+    return M.search_ancestors(startpath, matcher)
+  end
       settings = {
         solargraph = {
           diagnostics = true
