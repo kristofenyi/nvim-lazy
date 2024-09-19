@@ -17,7 +17,8 @@ return {
 
     local on_attach = function(client, bufnr)
       local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-      local opts = { noremap=true, silent=true }
+      local opts = { noremap=true, silent=true, virtual_text = false,
+        signs = false }
       buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
       buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
       buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
@@ -54,7 +55,15 @@ settings = {
       diagnostics = true
     }
   },
-  on_attach = on_attach
+  on_attach = function(client, bufnr)
+    -- Disable diagnostics for this client
+    client.server_capabilities.diagnosticProvider = false
+    
+    -- Call your original on_attach function if it exists
+    if on_attach then
+      on_attach(client, bufnr)
+    end
+  end
 }
 	-- Rust 
 lspconfig.rust_analyzer.setup{
@@ -90,10 +99,10 @@ lspconfig.omnisharp.setup{
   cmd = { "/usr/local/bin/omnisharp/omnisharp", "--languageserver", "--hostPID", tostring(pid) },
   filetypes = { "cs", "csx", "cshtml", "razor" },
   -- Assuming root_dir and a correct settings block are needed; adjust as necessary
-  root_dir = function(startpath)
+  --root_dir = function(startpath)
       -- Ensure the implementation for `search_ancestors` is defined and available
-      return M.search_ancestors(startpath, matcher) 
-  end,
+--      return M.search_ancestors(startpath, matcher) 
+  --end,
   -- Adjust the settings to what's appropriate for Omnisharp, if needed
   settings = {
     -- Example settings; replace with actual needed settings for Omnisharp

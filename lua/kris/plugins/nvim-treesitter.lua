@@ -40,8 +40,8 @@ return {
           "dockerfile",
           "gitignore",
           "query",
-          "ruby",      -- Added Ruby
-          "c_sharp",   -- Added C# (Note: the parser name for C# is "c_sharp")
+          "ruby",     
+          "c_sharp",   
         },
         incremental_selection = {
           enable = true,
